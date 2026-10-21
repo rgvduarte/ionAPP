@@ -1,0 +1,8 @@
+node_modules
+dist
+*.local
+.DS_Store
+# Native projects are generated with `npx cap add ios|android` when needed
+ios/App/Pods
+android/.gradle
+android/app/build
