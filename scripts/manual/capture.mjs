@@ -45,10 +45,14 @@ for (const shot of SHOTS) {
   await page.waitForTimeout(250);
   const targets = {};
   for (const [key, loc] of Object.entries(shot.targets)) {
-    let box = await loc(page).first().boundingBox({ timeout: 3000 }).catch(() => null);
-    if (!box) throw new Error(`[${shot.id}] target "${key}" not found`);
+    // A target may be several locators: frame their union.
+    const locs = [loc(page)].flat().map((l) => l.first());
+    const boxes = await Promise.all(locs.map((l) => l.boundingBox({ timeout: 3000 }).catch(() => null)));
+    if (boxes.some((b) => !b)) throw new Error(`[${shot.id}] target "${key}" not found`);
+    const x0 = Math.min(...boxes.map((b) => b.x)), y0b = Math.min(...boxes.map((b) => b.y));
+    let box = { x: x0, y: y0b, width: Math.max(...boxes.map((b) => b.x + b.width)) - x0, height: Math.max(...boxes.map((b) => b.y + b.height)) - y0b };
     // Content partly hidden under the top bar or tab bar: frame only its visible part.
-    const inBar = await loc(page).first().evaluate((el) => !!el.closest('.topbar, .tabbar'));
+    const inBar = await locs[0].evaluate((el) => !!el.closest('.topbar, .tabbar'));
     if (!inBar) {
       const [barTop, barBottom] = await page.evaluate(() => [
         document.querySelector('.topbar')?.getBoundingClientRect().bottom ?? 0,

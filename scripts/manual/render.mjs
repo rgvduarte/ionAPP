@@ -58,11 +58,12 @@ function phone(spec, width, min) {
       if (!b) throw new Error(`shot ${spec.shot} has no target ${key}`);
       const clamp = (v) => Math.max(0, Math.min(100, v));
       const x = clamp(b.x), y = clamp(b.y), w = clamp(b.x + b.w) - x, h = clamp(b.y + b.h) - y;
-      const below = (pos === 'tl' || pos === 'tr') && y < 5;
-      const bx = pos === 'tr' ? x + w : pos === 'above' ? x + w / 2 : x;
+      const below = pos === 'br' || ((pos === 'tl' || pos === 'tr') && y < 5);
+      const bx = pos === 'tr' || pos === 'br' ? x + w : pos === 'above' ? x + w / 2 : x;
       const by = pos === 'l' ? y + h / 2 : below ? y + h : y;
+      const cls = pos === 'br' ? 'tr' : pos;
       return `<div class="hl" style="left:${x}%;top:${y}%;width:${w}%;height:${h}%"></div>
-        <span class="bubble ${pos}${below ? ' below' : ''}" style="left:${bx}%;top:${by}%">${n}</span>`;
+        <span class="bubble ${cls}${below ? ' below' : ''}" style="left:${bx}%;top:${by}%">${n}</span>`;
     })
     .join('');
   return `<div class="phone" data-max="${width}" data-min="${min}" style="width:${width}mm"><div class="screen-wrap">
@@ -137,7 +138,7 @@ const pages = {
       <h2 class="section-title">Como ler este guia</h2>
       <div class="howto">
         <div><div class="row"><span class="bubble">1</span><strong>Marcadores numerados</strong></div><p>Cada número desenhado sobre um ecrã corresponde ao passo com o mesmo número na lista de passos.</p></div>
-        <div><div class="row"><span class="ui">Texto verde-lima</span></div><p>Indica o nome de um botão, separador ou opção, tal como aparece no ecrã.</p></div>
+        <div><div class="row"><span class="ui">Texto verde-lima</span></div><p>Indica um texto que aparece no ecrã — o nome de um botão, separador ou opção, ou uma mensagem — tal como surge na app.</p></div>
       </div>
       <div class="note"><span class="kicker">Nota</span>As imagens deste guia são ilustrativas. O programa, os oradores e os participantes apresentados são de demonstração e serão substituídos pelos dados reais do evento.</div>`),
 

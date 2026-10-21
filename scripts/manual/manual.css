@@ -164,6 +164,7 @@ strong { color: var(--text); font-weight: 700; }
 .ref td:first-child { border-left: 0.3mm solid #1d1d1d; border-radius: 3mm 0 0 3mm; color: var(--text); font-weight: 600; width: 46%; }
 .ref td:last-child { border-right: 0.3mm solid #1d1d1d; border-radius: 0 3mm 3mm 0; }
 .ref .sep { color: #5c5c5c; margin: 0 1.6mm; }
+.ref td:last-child > span { white-space: nowrap; }
 
 /* ---------- back cover ---------- */
 .back { justify-content: center; align-items: center; text-align: center; gap: 8mm; }

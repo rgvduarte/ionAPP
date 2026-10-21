@@ -128,7 +128,7 @@ const en = {
   'info.faq1q': 'How do I get into the event?',
   'info.faq1a': 'Your credential lives in this app. Show the QR code in the Pass tab at the entrance. Credentials are personal.',
   'info.faq2q': 'What does each pass include?',
-  'info.faq2a': 'The Conference Pass gives access to all five themed stages, networking lunch and closing cocktail on 23 March. The VIP Pass adds the VIP Gala Dinner and Awards Ceremony on 22 March and the VIP Lunch.',
+  'info.faq2a': 'The Conference Pass gives access to all five themed stages, the networking lunch and the closing cocktail on 23 March. The VIP Pass includes the conference and the closing cocktail, plus the VIP Gala Dinner and Awards Ceremony on 22 March and, on 23 March, the VIP Lunch instead of the networking lunch.',
   'info.faq3q': 'How do 1:1 meetings work?',
   'info.faq3a': 'Open a profile in Networking, request a slot and wait for the other person to accept. Meetings take place in the Networking Lounge.',
   'info.faq4q': 'Where is ion happening beyond Portugal?',
@@ -266,11 +266,11 @@ const pt: Record<Key, string> = {
   'info.faq1q': 'Como entro no evento?',
   'info.faq1a': 'A sua credencial está nesta app. Apresente o código QR do separador Credencial à entrada. As credenciais são nominais.',
   'info.faq2q': 'O que inclui cada passe?',
-  'info.faq2a': 'O Passe Conferência dá acesso aos cinco palcos temáticos, almoço de networking e cocktail de encerramento a 23 de março. O Passe VIP acrescenta o VIP Gala Dinner e a Cerimónia de Prémios a 22 de março e o VIP Lunch.',
+  'info.faq2a': 'O Passe Conferência dá acesso, a 23 de março, aos cinco palcos temáticos, ao almoço de networking e ao cocktail de encerramento. O Passe VIP inclui a conferência e o cocktail de encerramento e ainda o VIP Gala Dinner e a Awards Ceremony a 22 de março e, a 23 de março, o VIP Lunch em vez do almoço de networking.',
   'info.faq3q': 'Como funcionam as reuniões 1:1?',
   'info.faq3a': 'Abra um perfil no Networking, peça um horário e aguarde que a outra pessoa aceite. As reuniões decorrem no Networking Lounge.',
   'info.faq4q': 'Onde acontece a ion além de Portugal?',
-  'info.faq4a': 'Em 2027 a ion realiza eventos de networking em quatro mercados convergentes: Portugal, Emirados Árabes Unidos, Hong Kong e worldwide.',
+  'info.faq4a': 'Em 2027 a ion realiza eventos de networking em quatro mercados convergentes: Portugal (PT), Emirados Árabes Unidos (UAE), Hong Kong (HK) e Worldwide (WW), com eventos internacionais.',
 
   'news.title': 'Notícias',
 };

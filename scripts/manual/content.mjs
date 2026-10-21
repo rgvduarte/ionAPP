@@ -65,7 +65,7 @@ export const PAGES = [
     type: 'steps', chapter: '03', opener: true,
     title: 'A barra de navegação',
     intro: 'A barra de navegação, na parte de baixo do ecrã, está sempre visível e tem cinco separadores. O separador ativo fica destacado a verde-lima.',
-    phones: [{ shot: 'nav', marks: { 1: 'home', 2: 'agenda', 3: 'pass', 4: 'network', 5: 'more', 6: ['badge', 'above'] } }],
+    phones: [{ shot: 'nav', marks: { 1: 'home', 2: 'agenda', 3: 'pass', 4: 'network', 5: ['more', 'tr'], 6: ['badge', 'above'] } }],
     steps: [
       '[[Início]] — resumo do evento, contagem decrescente e atalhos.',
       '[[Agenda]] — programa completo dos dois dias.',
@@ -82,7 +82,7 @@ export const PAGES = [
     type: 'steps', chapter: '04', opener: true,
     title: 'O ecrã Início',
     intro: 'O Início é o primeiro ecrã depois de entrar. Para lá voltar, toque em [[Início]] na barra de navegação.',
-    phones: [{ shot: 'home', marks: { 1: 'hero', 2: 'countdown', 3: 'alert', 4: 'quick', 5: ['bell', 'tr'] } }],
+    phones: [{ shot: 'home', marks: { 1: 'hero', 2: ['countdown', 'tr'], 3: 'alert', 4: 'quick', 5: ['bell', 'tr'] } }],
     steps: [
       'No topo vê a identidade do evento: ion PT ’27, com a Liga Portugal como parceiro institucional, em março de 2027.',
       'A contagem decrescente mostra os dias, horas, minutos e segundos que faltam para o arranque, a 22 de março às 18:30. Quando o evento começa, dá lugar à mensagem [[A ion está a decorrer]].',
@@ -98,11 +98,11 @@ export const PAGES = [
     intro: 'Desloque o ecrã para baixo para ver o resto do Início.',
     phones: [
       { shot: 'home-days', marks: { 1: 'about', 2: 'day22' } },
-      { shot: 'home-sessions', marks: { 3: 'stats', 4: 'card', 5: ['star', 'tr'], 6: ['seeAll', 'l'] } },
+      { shot: 'home-sessions', marks: { 3: 'stats', 4: ['card', 'l'], 5: ['star', 'tr'], 6: ['seeAll', 'l'] } },
     ],
     steps: [
       'Conheça a história da ion: de evento anual em Portugal, desde 2021, a encontros de networking em quatro mercados em 2027.',
-      'Em [[Dois dias. Um ecossistema.]], toque no cartão do dia 22 (VIP Gala Dinner e Awards Ceremony) ou do dia 23 (ion Conference e VIP Lunch) para abrir a agenda desse dia.',
+      'Toque no cartão do dia 22 (VIP Gala Dinner e Awards Ceremony) ou do dia 23 (ion Conference e VIP Lunch) para abrir a agenda desse dia. Os cartões estão na secção [[Dois dias. Um ecossistema.]]',
       'Os números do evento: 5 palcos temáticos, mais de 90 oradores e 650 convidados.',
       '[[As minhas sessões]] mostra até três das sessões que marcou com estrela, por ordem de horário. Toque numa para ver o detalhe.',
       'Toque na estrela para retirar a sessão da sua agenda.',
@@ -114,7 +114,7 @@ export const PAGES = [
     title: 'Citações, notícias e galeria',
     phones: [
       { shot: 'home-news', marks: { 1: 'quotes', 2: 'news', 3: ['seeAll', 'l'] } },
-      { shot: 'home-gallery', marks: { 4: 'gallery', 5: 'partner' } },
+      { shot: 'home-gallery', marks: { 4: 'gallery', 5: ['partner', 'tr'] } },
     ],
     steps: [
       'Deslize as citações para o lado para ler as mensagens que inspiram a ion.',
@@ -130,7 +130,7 @@ export const PAGES = [
     type: 'steps', chapter: '05', opener: true,
     title: 'Consultar o programa',
     intro: 'Toque em [[Agenda]] na barra de navegação. A agenda abre no dia da conferência, 23 de março.',
-    phones: [{ shot: 'agenda', marks: { 1: 'days', 2: 'time', 3: 'card', 4: ['star', 'tr'], 5: 'mine', 6: ['stages', 'tr'] } }],
+    phones: [{ shot: 'agenda', marks: { 1: 'days', 2: ['time', 'l'], 3: ['card', 'l'], 4: ['star', 'tr'], 5: 'mine', 6: ['stages', 'tr'] } }],
     steps: [
       'Escolha o dia: [[22]] (noite VIP: Gala Dinner e Awards Ceremony) ou [[23]] (ion Conference).',
       'As sessões estão agrupadas pela hora de início. À mesma hora podem decorrer sessões em palcos diferentes.',
@@ -145,8 +145,8 @@ export const PAGES = [
     type: 'steps', chapter: '05',
     title: 'Filtrar por palco e ver a sua agenda',
     phones: [
-      { shot: 'agenda-filter', marks: { 1: 'chip', 2: 'card' } },
-      { shot: 'agenda-mine', marks: { 3: 'mine', 4: 'list', 5: 'day22' } },
+      { shot: 'agenda-filter', marks: { 1: 'chip', 2: ['card', 'l'] } },
+      { shot: 'agenda-mine', marks: { 3: 'mine', 4: ['list', 'l'], 5: 'day22' } },
     ],
     steps: [
       'Deslize a fila de filtros para o lado e toque num palco — por exemplo, [[Business of Football]]. O filtro ativo fica a branco.',
@@ -160,7 +160,7 @@ export const PAGES = [
   {
     type: 'steps', chapter: '05',
     title: 'Detalhe da sessão e calendário',
-    phones: [{ shot: 'session', marks: { 1: 'facts', 2: 'fav', 3: 'cal', 4: 'speaker', 5: ['back', 'tr'] } }],
+    phones: [{ shot: 'session', marks: { 1: 'facts', 2: 'fav', 3: 'cal', 4: ['speaker', 'tr'], 5: ['back', 'tr'] } }],
     steps: [
       'Veja o dia, o horário e o palco da sessão, seguidos da descrição.',
       '[[Adicionar à minha agenda]] marca a sessão com estrela (o botão passa a [[Na minha agenda]]). Toque de novo para retirar.',
@@ -187,14 +187,14 @@ export const PAGES = [
     intro: 'Abra a lista em [[Início]] › [[Oradores]] ou em [[Mais]] › [[Oradores]].',
     phones: [
       { shot: 'speakers', marks: { 1: 'search', 2: 'card' } },
-      { shot: 'speaker', marks: { 3: 'head', 4: 'bio', 5: 'session' } },
+      { shot: 'speaker', marks: { 3: 'head', 4: 'bio', 5: ['session', 'tr'] } },
     ],
     steps: [
       'Pesquise por nome, empresa ou cargo.',
       'Toque num orador para abrir o perfil.',
       'Veja o nome, o cargo, a empresa e o país.',
       'Leia a biografia do orador.',
-      'Em [[Sessões]] encontra todas as intervenções do orador: toque na estrela para as adicionar à sua agenda ou no cartão para ver o detalhe.',
+      'Em [[Sessões]] encontra todas as intervenções do orador: toque na estrela de uma sessão para a adicionar à sua agenda ou no cartão para ver o detalhe.',
     ],
   },
 
@@ -203,7 +203,7 @@ export const PAGES = [
     type: 'steps', chapter: '07', opener: true,
     title: 'A sua credencial de acesso',
     intro: 'A credencial é o seu bilhete para o evento. É nominal e intransmissível.',
-    phones: [{ shot: 'credential', marks: { 1: ['tab', 'tr'], 2: ['type', 'tr'], 3: 'qr', 4: 'name', 5: 'id' } }],
+    phones: [{ shot: 'credential', marks: { 1: ['tab', 'tr'], 2: ['type', 'tr'], 3: 'qr', 4: 'name', 5: ['id', 'l'] } }],
     steps: [
       'Toque no botão central [[Credencial]] da barra de navegação, a partir de qualquer ecrã.',
       'No topo vê o tipo de passe: [[Passe VIP]] ou [[Passe Conferência]].',
@@ -211,12 +211,12 @@ export const PAGES = [
       'Por baixo aparecem o seu nome, cargo e empresa.',
       'O [[ID da credencial]] identifica-o se o código não puder ser lido.',
     ],
-    tip: 'Abra a credencial antes de chegar à entrada, enquanto tem rede: nesta versão, a app precisa de ligação à internet para abrir.',
+    tip: 'Abra a credencial antes de chegar à entrada, enquanto tem rede, e não feche a app: nesta versão, a app precisa de ligação à internet para abrir.',
   },
   {
     type: 'steps', chapter: '07',
     title: 'À entrada e o que inclui o seu passe',
-    phones: [{ shot: 'credential-access', marks: { 1: 'hint', 2: 'access' } }],
+    phones: [{ shot: 'credential-access', marks: { 1: 'hint', 2: ['access', 'tr'] } }],
     steps: [
       'Aumente o brilho do ecrã antes de apresentar o código.',
       'Em [[Acesso]] vê os momentos incluídos no seu passe.',
@@ -255,7 +255,7 @@ export const PAGES = [
   {
     type: 'steps', chapter: '08',
     title: 'Responder a pedidos de ligação',
-    phones: [{ shot: 'net-connections', marks: { 1: 'tab', 2: 'label', 3: ['accept', 'tr'], 4: ['decline', 'tr'], 5: ['pending', 'tr'], 6: ['connected', 'tr'] } }],
+    phones: [{ shot: 'net-connections', marks: { 1: 'tab', 2: ['label', 'l'], 3: 'accept', 4: ['decline', 'tr'], 5: ['pending', 'tr'], 6: ['connected', 'tr'] } }],
     steps: [
       'Toque em [[Ligações]] — ou no aviso de pedidos pendentes do Início.',
       'Os pedidos recebidos aparecem primeiro, com a indicação [[Quer ligar-se a si]].',
@@ -271,9 +271,9 @@ export const PAGES = [
     title: 'Pedir uma reunião 1:1',
     intro: 'As reuniões 1:1 decorrem no Networking Lounge, a 23 de março. Não precisa de estar ligado à pessoa para pedir uma reunião.',
     phones: [
-      { shot: 'attendee', marks: { 1: 'head', 2: 'meet' } },
+      { shot: 'attendee', marks: { 1: 'head', 2: ['meet', 'tr'] } },
       { shot: 'slot', marks: { 3: 'chosen', 4: ['send', 'tr'], 5: 'cancel' } },
-      { shot: 'slot-sent', marks: { 6: 'meeting', 7: 'toast' } },
+      { shot: 'slot-sent', marks: { 6: ['meeting', 'tr'], 7: 'toast' } },
     ],
     steps: [
       'Abra o perfil da pessoa (em [[Pessoas]] ou [[Ligações]]). No topo vê o nome, o cargo, a empresa e o país; por baixo, o setor, a descrição e os [[Interesses]].',
@@ -289,8 +289,8 @@ export const PAGES = [
     type: 'steps', chapter: '08',
     title: 'Gerir as suas reuniões',
     phones: [
-      { shot: 'meetings', marks: { 1: ['tab', 'tr'], 2: 'outgoing', 3: 'incoming', 4: ['accept', 'tr'], 5: ['decline', 'tr'] } },
-      { shot: 'meetings-confirmed', marks: { 6: 'confirmed', 7: 'tab' } },
+      { shot: 'meetings', marks: { 1: ['tab', 'tr'], 2: 'outgoing', 3: 'incoming', 4: ['accept', 'tr'], 5: ['decline', 'br'] } },
+      { shot: 'meetings-confirmed', marks: { 6: 'confirmed', 7: ['tab', 'tr'] } },
     ],
     steps: [
       'Toque em [[Reuniões]]. As reuniões aparecem por ordem de horário.',
@@ -311,7 +311,7 @@ export const PAGES = [
     intro: 'Abra as notícias pelo sino no topo do Início, por [[Ver tudo]] na secção [[Notícias]] do Início, ou em [[Mais]] › [[Notícias]].',
     phones: [
       { shot: 'news', marks: { 1: 'item' } },
-      { shot: 'news-detail', marks: { 2: 'title', 3: ['back', 'tr'] } },
+      { shot: 'news-detail', marks: { 2: ['title', 'tr'], 3: ['back', 'tr'] } },
     ],
     steps: [
       'Toque numa notícia da lista. Cada uma mostra a data, o título e um resumo.',
@@ -400,10 +400,10 @@ export const LEGEND = [
 
 export const TROUBLESHOOTING = [
   { q: 'O código QR não é lido à entrada', a: 'Aumente o brilho do ecrã, limpe o ecrã e segure o telemóvel a 15–20 cm do leitor, sem reflexos. Se mesmo assim não funcionar, indique à equipa de acreditação o [[ID da credencial]] que aparece por baixo do código.' },
-  { q: 'A app não abre sem internet', a: 'Nesta versão, a app precisa de ligação à internet para abrir. Abra a [[Credencial]] antes de chegar à entrada, enquanto tem rede. Se não conseguir, indique o seu nome à equipa de acreditação.' },
-  { q: 'A app voltou ao ecrã de boas-vindas', a: 'Pode ter tocado em [[Terminar sessão (apaga dados demo)]], os dados do browser podem ter sido apagados (também acontece em navegação privada) ou, no iPhone, abriu a app pelo ícone do ecrã principal depois de se ter registado no Safari — o ícone e o Safari não partilham dados. O Safari pode também apagar os dados de sites que não abre há vários dias. Registe-se de novo.' },
+  { q: 'A app não abre sem internet', a: 'Nesta versão, a app precisa de ligação à internet para abrir. Abra a [[Credencial]] antes de chegar à entrada, enquanto tem rede, e não feche a app. Se não conseguir, indique o seu nome à equipa de acreditação.' },
+  { q: 'A app voltou ao ecrã de boas-vindas', a: 'Pode ter tocado em [[Terminar sessão (apaga dados demo)]], os dados do browser podem ter sido apagados (também acontece em navegação privada) ou, no iPhone, pode ter aberto a app pelo ícone do ecrã principal depois de se ter registado no Safari — o ícone e o Safari não partilham dados. O Safari pode também apagar os dados de sites que não abre há vários dias. Registe-se de novo.' },
   { q: 'Não vejo as minhas sessões noutro dispositivo', a: 'Os seus dados ficam no dispositivo e no browser onde se registou. No iPhone, a app instalada no ecrã principal não partilha dados com o Safari: instale a app primeiro, registe-se a partir do ícone e use sempre o ícone.' },
-  { q: 'Os horários parecem diferentes', a: 'Na app, todos os horários estão na hora de Lisboa, para coincidirem com o evento. No calendário do telemóvel (ficheiro .ics), a sessão aparece convertida para o fuso horário do telemóvel: é a mesma hora, apresentada no seu fuso.' },
+  { q: 'Os horários parecem diferentes', a: 'Na app, todos os horários estão na hora de Lisboa, para coincidirem com o evento. No calendário do telemóvel (ficheiro .ics), a sessão aparece convertida para o fuso horário do telemóvel: é o mesmo momento, apresentado na sua hora local.' },
   { q: 'A app está noutro idioma', a: 'Vá a [[Mais]] › [[Idioma]] e toque em [[PT]] ou [[EN]].' },
   { q: 'Aparece um indicador vermelho no Networking', a: 'Tem pedidos de ligação ou de reunião por responder. Veja os separadores [[Ligações]] e [[Reuniões]].' },
   { q: 'Não consigo escolher um horário de reunião', a: 'Os horários esbatidos já estão ocupados por uma reunião sua ou por um pedido de reunião ainda sem resposta (enviado ou recebido). Escolha outro horário — se recusar um pedido recebido, esse horário fica livre.' },

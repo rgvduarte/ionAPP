@@ -181,7 +181,7 @@ export const SHOTS = [
       tab: (p) => p.locator('.tabbar .tab-pass'),
       type: (p) => p.locator('.pass-type'),
       qr: (p) => p.locator('.pass-qr'),
-      name: (p) => p.locator('.pass-name'),
+      name: (p) => [p.locator('.pass-name'), p.locator('.pass-company')],
       id: (p) => p.locator('.pass-id'),
       hint: (p) => p.locator('.hint'),
     },
