@@ -10,3 +10,5 @@ android/app/build
 # Manual build intermediates (screenshots, HTML); the PDF itself is committed
 docs/manual/build
 docs/video/build
+# Rendered films are delivered as files, not versioned (regenerate with scripts/video/render.mjs)
+docs/video/*.mp4
