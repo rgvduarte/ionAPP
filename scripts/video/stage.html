@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8" />
+<title>ion — app film</title>
+<link rel="stylesheet" href="/fonts/latin-400.css" />
+<link rel="stylesheet" href="/fonts/latin-500.css" />
+<link rel="stylesheet" href="/fonts/latin-700.css" />
+<link rel="stylesheet" href="/fonts/latin-800.css" />
+<style>
+  :root { --lime: #ccff00; --amber: #daac1b; --red: #eb473d; --grad: linear-gradient(90deg, var(--lime) 0%, var(--amber) 55%, var(--red) 100%); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  body { width: 1920px; height: 1080px; font-family: 'Inter Tight', sans-serif; color: #fff; -webkit-font-smoothing: antialiased; }
+  #stage { position: absolute; inset: 0; overflow: hidden; perspective: 2200px; }
+  .layer { position: absolute; will-change: auto; }
+
+  #bgmap { left: -80px; top: 520px; width: 2080px; opacity: 0; filter: saturate(1.1); }
+  .glow { position: absolute; width: 1400px; height: 1400px; border-radius: 50%; filter: blur(40px); opacity: 0; }
+  #glowA { background: radial-gradient(circle, rgba(204, 255, 0, 0.16), transparent 62%); }
+  #glowB { background: radial-gradient(circle, rgba(235, 71, 61, 0.14), transparent 62%); }
+
+  /* ---------- device ---------- */
+  .device { position: absolute; left: 0; top: 0; width: 417px; height: 876px; transform-origin: 50% 50%; opacity: 0; }
+  .device .frame { position: absolute; inset: 0; border-radius: 68px; background: #050505;
+    box-shadow: 0 0 0 2.5px #4a4a4e, 0 0 0 5px #161618, 0 0 0 6px #2c2c2e, 0 60px 140px rgba(0, 0, 0, 0.75), 0 0 180px rgba(204, 255, 0, 0.07); }
+  .device .btn { position: absolute; width: 5px; border-radius: 3px; background: #2c2c2e; }
+  .device .screen { position: absolute; left: 12px; top: 12px; width: 393px; height: 852px; border-radius: 56px; overflow: hidden; background: #000; }
+  .device iframe { position: absolute; inset: 0; width: 393px; height: 852px; border: 0; background: #000; }
+  .device .static { position: absolute; inset: 0; width: 393px; height: 852px; opacity: 0; }
+  .status { position: absolute; left: 0; right: 0; top: 0; height: 54px; display: flex; align-items: center; justify-content: space-between; padding: 4px 30px 0 52px; font-weight: 700; font-size: 17px; letter-spacing: -0.01em; color: #fff; pointer-events: none; }
+  .status .icons { display: flex; gap: 7px; align-items: center; }
+  .island { position: absolute; top: 11px; left: 50%; width: 125px; height: 37px; margin-left: -62.5px; border-radius: 20px; background: #000; }
+  .homebar { position: absolute; bottom: 8px; left: 50%; width: 136px; height: 5px; margin-left: -68px; border-radius: 3px; background: #fff; opacity: 0.92; }
+  .toast { position: absolute; left: 50%; bottom: 112px; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px; border-radius: 999px;
+    background: var(--lime); color: #000; font-weight: 800; font-size: 16px; white-space: nowrap; opacity: 0; }
+
+  /* ---------- touch indicator ---------- */
+  #tap { position: absolute; width: 54px; height: 54px; margin: -27px 0 0 -27px; border-radius: 50%; background: rgba(255, 255, 255, 0.28); border: 2px solid rgba(255, 255, 255, 0.75); box-shadow: 0 0 24px rgba(255, 255, 255, 0.25); opacity: 0; pointer-events: none; }
+
+  /* ---------- type ---------- */
+  .cap { position: absolute; left: 170px; top: 0; width: 820px; height: 1080px; display: flex; flex-direction: column; justify-content: center; opacity: 0; }
+  .cap h1 { margin: 0; font-size: 92px; line-height: 0.98; font-weight: 800; letter-spacing: -0.045em; white-space: pre-line; }
+  .cap h1 em { font-style: normal; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .cap p { margin: 34px 0 0; font-size: 30px; line-height: 1.3; color: #a1a1a6; font-weight: 500; max-width: 640px; letter-spacing: -0.01em; }
+  .cap.center { left: 0; width: 1920px; align-items: center; text-align: center; }
+  .cap.center h1 { font-size: 64px; }
+
+  #intro-logo { left: 50%; top: 50%; width: 560px; margin: -260px 0 0 -280px; opacity: 0; }
+  #intro-cap { position: absolute; left: 0; width: 1920px; top: 690px; text-align: center; font-size: 48px; font-weight: 800; letter-spacing: -0.035em; opacity: 0; }
+
+  #montage-cap { position: absolute; left: 0; width: 1920px; top: 70px; text-align: center; font-size: 60px; font-weight: 800; letter-spacing: -0.04em; opacity: 0; }
+  #montage-cap span { transition: none; color: #3a3a3c; }
+
+  #outro { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; }
+  #outro .logo { width: 330px; }
+  #outro .edition { height: 74px; margin-top: 34px; }
+  #outro .when { margin-top: 26px; font-size: 40px; font-weight: 800; letter-spacing: -0.03em; }
+  #outro .markets { width: 900px; margin-top: 44px; }
+  #outro .avail { margin-top: 46px; font-size: 26px; color: #a1a1a6; font-weight: 500; }
+  #outro .url { margin-top: 8px; font-size: 26px; color: var(--lime); font-weight: 700; }
+  #fade { position: absolute; inset: 0; background: #000; opacity: 0; pointer-events: none; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="glowA" class="glow"></div>
+  <div id="glowB" class="glow"></div>
+  <img id="bgmap" class="layer" src="/app/images/world-map.webp" alt="" />
+
+  <img id="intro-logo" class="layer" src="/app/images/logo-full.webp" alt="" />
+  <div id="intro-cap"></div>
+
+  <div id="captions"></div>
+  <div id="montage-cap"></div>
+
+  <div id="devices"></div>
+  <div id="tap"></div>
+
+  <div id="outro">
+    <img class="logo" src="/app/images/logo-full.webp" alt="" />
+    <img class="edition" src="/app/images/pt-27.webp" alt="" />
+    <div class="when"></div>
+    <img class="markets" src="/app/images/markets-strip.webp" alt="" />
+    <div class="avail"></div>
+    <div class="url"></div>
+  </div>
+  <div id="fade"></div>
+</div>
+<script src="/stage/stage.js"></script>
+</body>
+</html>
