@@ -35,15 +35,18 @@ function shell(page, index, body) {
   const ch = page.chapter && chapterOf(page.chapter);
   return `<section class="page">
     <header class="page-head">
-      <img src="${asset('images/logo-full.webp')}" alt="ion" />
-      <span class="chapter-label">${ch ? `<b>${ch.n}</b>${esc(ch.title)}` : ''}</span>
+      <img src="${new URL('assets/logo-header.png', import.meta.url).href}" alt="ion" />
+      <span class="chapter-label">${ch ? `<b>${ch.n}</b>${keepIon(esc(ch.title))}` : ''}</span>
     </header>
     <div class="page-body">${page.opener && ch ? opener(ch) : ''}${body}</div>
     <footer class="page-foot"><span>${META.title} · ${META.subtitle}</span><span class="num">${String(index + 1).padStart(2, '0')}</span></footer>
   </section>`;
 }
 
-const opener = (ch) => `<div class="opener"><span class="num grad-text">${ch.n}</span><h1>${esc(ch.title)}</h1></div>`;
+const keepIon = (html) => html.replace(/\bion\b/g, '<span class="nocase">ion</span>');
+const GRAD_DEFS = '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="ion-grad" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#ccff00"/><stop offset=".55" stop-color="#daac1b"/><stop offset="1" stop-color="#eb473d"/></linearGradient></defs></svg>';
+const gnum = (t) => `<svg class="gnum" viewBox="0 0 ${(t.length * 0.62).toFixed(2)} 0.74" overflow="visible"><text x="0" y="0.72" font-size="1" font-weight="800" letter-spacing="-0.05" fill="url(#ion-grad)">${t}</text></svg>`;
+const opener = (ch) => `<div class="opener">${gnum(ch.n)}<h1>${esc(ch.title)}</h1></div>`;
 
 function phone(spec, width, min) {
   const s = shots[spec.shot];
@@ -55,9 +58,11 @@ function phone(spec, width, min) {
       if (!b) throw new Error(`shot ${spec.shot} has no target ${key}`);
       const clamp = (v) => Math.max(0, Math.min(100, v));
       const x = clamp(b.x), y = clamp(b.y), w = clamp(b.x + b.w) - x, h = clamp(b.y + b.h) - y;
-      const bx = pos === 'tr' ? x + w : x;
+      const below = (pos === 'tl' || pos === 'tr') && y < 5;
+      const bx = pos === 'tr' ? x + w : pos === 'above' ? x + w / 2 : x;
+      const by = pos === 'l' ? y + h / 2 : below ? y + h : y;
       return `<div class="hl" style="left:${x}%;top:${y}%;width:${w}%;height:${h}%"></div>
-        <span class="bubble ${pos}" style="left:${bx}%;top:${y}%">${n}</span>`;
+        <span class="bubble ${pos}${below ? ' below' : ''}" style="left:${bx}%;top:${by}%">${n}</span>`;
     })
     .join('');
   return `<div class="phone" data-max="${width}" data-min="${min}" style="width:${width}mm"><div class="screen-wrap">
@@ -97,8 +102,15 @@ function stepsPage(p) {
   if (n === 1) {
     return `${head}<div class="layout-side">${phone(p.phones[0], p.phoneWidth ?? 88, 60)}<div>${stepList(p.steps)}${extras(p)}</div></div>`;
   }
-  const [max, min] = n === 3 ? [57, 44] : [80, 50];
-  return `${head}<div class="layout-row n${n}">${p.phones.map((ph) => phone(ph, p.phoneWidth ?? max, min)).join('')}</div>${stepList(p.steps, 'cols')}${extras(p)}`;
+  const [max, min] = n === 3 ? [57, 44] : [80, 44];
+  const perPhone = p.phones.map((ph) => Object.keys(ph.marks ?? {}).map(Number).sort((a, b) => a - b));
+  const listed = new Set(perPhone.flat());
+  p.steps.forEach((_, i) => { if (!listed.has(i + 1)) perPhone[0].push(i + 1); });
+  perPhone[0].sort((a, b) => a - b);
+  const cols = perPhone
+    .map((ks) => `<ol class="steps">${ks.map((k) => `<li><span class="bubble">${k}</span><span>${md(p.steps[k - 1])}</span></li>`).join('')}</ol>`)
+    .join('');
+  return `${head}<div class="layout-row n${n}">${p.phones.map((ph) => phone(ph, p.phoneWidth ?? max, min)).join('')}</div><div class="step-cols n${n}">${cols}</div>${extras(p)}`;
 }
 
 const pages = {
@@ -115,7 +127,7 @@ const pages = {
   toc: (p, i) =>
     shell(p, i, `<div class="opener"><h1>Índice</h1></div>
       <nav class="toc">${CHAPTERS.map(
-        (c) => `<a><span class="n grad-text">${c.n}</span><span>${esc(c.title)}</span><span class="p">${firstPage[c.n]}</span></a>`,
+        (c) => `<a>${gnum(c.n)}<span>${esc(c.title)}</span><span class="p">${firstPage[c.n]}</span></a>`,
       ).join('')}</nav>`),
 
   overview: (p, i) =>
@@ -124,20 +136,20 @@ const pages = {
       <div class="features">${FEATURES.map((f) => `<div class="feature">${icon(f.icon)}<h3>${esc(f.title)}</h3><p>${esc(f.text)}</p></div>`).join('')}</div>
       <h2 class="section-title">Como ler este guia</h2>
       <div class="howto">
-        <div><div class="row"><span class="bubble">1</span><strong>Marcadores numerados</strong></div><p>Cada número desenhado sobre um ecrã corresponde ao passo com o mesmo número no texto ao lado.</p></div>
+        <div><div class="row"><span class="bubble">1</span><strong>Marcadores numerados</strong></div><p>Cada número desenhado sobre um ecrã corresponde ao passo com o mesmo número na lista de passos.</p></div>
         <div><div class="row"><span class="ui">Texto verde-lima</span></div><p>Indica o nome de um botão, separador ou opção, tal como aparece no ecrã.</p></div>
       </div>
-      <div class="note"><span class="kicker">Nota</span>As imagens deste guia são ilustrativas. O programa, os oradores e os participantes apresentados são de demonstração e serão substituídos pelo programa oficial.</div>`),
+      <div class="note"><span class="kicker">Nota</span>As imagens deste guia são ilustrativas. O programa, os oradores e os participantes apresentados são de demonstração e serão substituídos pelos dados reais do evento.</div>`),
 
   install: (p, i) =>
     shell(p, i, `<h2 class="section-title">Aceder e instalar a app</h2>
-      <p class="intro">A app funciona em qualquer telemóvel, tablet ou computador com um browser atualizado. Não precisa de palavra-passe.</p>
+      <p class="intro">A app funciona em qualquer telemóvel, tablet ou computador com um browser atualizado e ligação à internet. Não precisa de palavra-passe.</p>
       <div class="access"><div><span class="kicker">Abrir no browser</span><p class="url">${esc(META.appUrl.replace('https://', ''))}</p><p>Aponte a câmara do telemóvel para o código QR ou escreva o endereço no browser.</p></div><div class="code">${qr(META.appUrl)}</div></div>
       <div class="platforms">
         <div class="platform"><h3>iPhone</h3><span class="kicker">Safari</span>${stepList([
           'Abra o endereço da app no Safari.',
-          'Toque no botão Partilhar {{icon:Share}}, na barra do browser.',
-          'Escolha [[Adicionar ao ecrã principal]].',
+          'Toque no botão Partilhar {{icon:Share}} na barra do Safari. Nas versões mais recentes do iOS, toque primeiro em ⋯ e depois em [[Partilhar]].',
+          'Escolha [[Adicionar ao ecrã principal]] (pode ter de deslizar a lista de opções).',
           'Toque em [[Adicionar]]. O ícone da ion aparece no ecrã principal e a app abre em ecrã inteiro.',
         ])}</div>
         <div class="platform"><h3>Android</h3><span class="kicker">Chrome</span>${stepList([
@@ -147,7 +159,9 @@ const pages = {
           'Confirme. O ícone da ion aparece no ecrã principal, como qualquer outra app.',
         ])}</div>
       </div>
-      <div class="tip"><span class="kicker">Versões iOS e Android</span>Estão previstas versões nativas da app nas lojas de aplicações, com as mesmas funcionalidades descritas neste guia.</div>`),
+      <div class="note"><span class="kicker">Antes de se registar</span>Registe-se no telemóvel que vai levar ao evento: a credencial fica guardada apenas nesse dispositivo. No iPhone, adicione primeiro a app ao ecrã principal e registe-se a partir do ícone da ion — o Safari e a app do ecrã principal guardam os dados em separado, e cada novo registo cria uma credencial com outro ID.</div>
+      <div class="note"><span class="kicker">Sem rede à entrada?</span>Nesta versão, a app precisa de ligação à internet para abrir. Antes de chegar à acreditação, abra a <span class="ui">Credencial</span> enquanto tem rede e não feche a app.</div>
+      <div class="tip"><span class="kicker">Apps nativas</span>Estão previstas versões nativas da app nas lojas de aplicações para iPhone e Android, com as mesmas funcionalidades descritas neste guia.</div>`),
 
   steps: (p, i) => shell(p, i, stepsPage(p)),
 
@@ -158,7 +172,7 @@ const pages = {
 
   reference: (p, i) =>
     shell(p, i, `<table class="ref"><thead><tr><th>Quero…</th><th>Onde</th></tr></thead><tbody>${REFERENCE.map(
-      ([want, path]) => `<tr><td>${esc(want)}</td><td>${path.map((x) => `<span class="ui">${esc(x)}</span>`).join('<span class="sep">›</span>')}</td></tr>`,
+      ([want, path]) => `<tr><td>${esc(want)}</td><td>${path.map((x) => (x.startsWith('~') ? `<span>${esc(x.slice(1))}</span>` : `<span class="ui">${esc(x)}</span>`)).join('<span class="sep">›</span>')}</td></tr>`,
     ).join('')}</tbody></table>`),
 
   back: () => `<section class="page back">
@@ -175,7 +189,7 @@ const fontCss = [400, 500, 700, 800]
   .join('');
 const html = `<!doctype html><html lang="pt-PT"><head><meta charset="utf-8" /><title>ion — ${META.title}</title>
   ${fontCss}<link rel="stylesheet" href="${new URL('manual.css', import.meta.url).href}" /></head>
-  <body>${PAGES.map((p, i) => pages[p.type](p, i)).join('\n')}</body></html>`;
+  <body>${GRAD_DEFS}${PAGES.map((p, i) => pages[p.type](p, i)).join('\n')}</body></html>`;
 
 const htmlPath = new URL('manual.html', build);
 await writeFile(htmlPath, html);

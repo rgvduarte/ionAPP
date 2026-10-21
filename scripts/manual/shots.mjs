@@ -32,6 +32,7 @@ export const SHOTS = [
       await p.fill('input[autocomplete=organization-title]', 'Head of Partnerships');
       await p.locator('select').first().selectOption('brands');
       await p.locator('input[autocomplete=name]').blur();
+      await p.locator('input[autocomplete=organization-title]').evaluate((el) => { el.setSelectionRange(0, 0); el.scrollLeft = 0; });
       await scrollTo('.form', 24)(p);
     },
     targets: {
@@ -94,7 +95,7 @@ export const SHOTS = [
     targets: {
       quotes: (p) => p.locator('.quotes'),
       seeAll: (p) => p.locator('a.link[href="#/news"]'),
-      news: (p) => p.locator('.news-card').nth(0),
+      news: (p) => p.locator('.news-card').nth(0).locator('img'),
     },
   },
   {
@@ -291,7 +292,7 @@ export const SHOTS = [
     targets: {
       confirmed: (p) => p.locator('.meeting-card.m-confirmed'),
       toast: (p) => p.locator('.toast'),
-      badge: (p) => p.locator('.tabbar .badge'),
+      tab: (p) => p.locator('.tabbar a').nth(3),
     },
   },
   {

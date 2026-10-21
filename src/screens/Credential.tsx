@@ -11,7 +11,7 @@ export default function Credential() {
   const p = state.profile!;
   const access =
     p.ticket === 'vip'
-      ? ['VIP Gala Dinner · 22/03', 'Awards Ceremony · 22/03', 'ion Conference · 23/03', 'VIP Lunch · 23/03']
+      ? ['VIP Gala Dinner · 22/03', 'Awards Ceremony · 22/03', 'ion Conference · 23/03', 'VIP Lunch · 23/03', 'Closing Cocktail · 23/03']
       : ['ion Conference · 23/03', 'Networking Lunch · 23/03', 'Closing Cocktail · 23/03'];
 
   return (
