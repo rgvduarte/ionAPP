@@ -157,7 +157,7 @@ p { margin: 0; }
 
 /* ---------- welcome ---------- */
 .welcome { max-width: var(--max); margin: 0 auto; min-height: 100dvh; padding-top: var(--safe-top); padding-bottom: calc(var(--safe-bottom) + 24px); }
-.welcome-lang { display: flex; justify-content: flex-end; gap: 6px; padding: 14px 20px 0; }
+.welcome-lang { display: flex; justify-content: flex-end; gap: 6px; width: fit-content; margin: 14px 20px 0 auto; }
 .welcome-lang button, .lang-switch button { height: 30px; min-width: 40px; border-radius: 999px; border: 1px solid var(--line); font-size: 0.8rem; font-weight: 800; color: var(--muted); }
 .welcome-lang button.on, .lang-switch button.on { background: var(--lime); border-color: var(--lime); color: #000; }
 .welcome-hero { position: relative; display: grid; place-items: center; padding: 10px 0 18px; }

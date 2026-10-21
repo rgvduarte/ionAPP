@@ -6,3 +6,6 @@ dist
 ios/App/Pods
 android/.gradle
 android/app/build
+
+# Manual build intermediates (screenshots, HTML); the PDF itself is committed
+docs/manual/build

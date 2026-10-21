@@ -37,6 +37,20 @@ Stack: React 19 + TypeScript + Vite, React Router (hash routing), Capacitor 8. S
 
 > **Atenção:** oradores, sessões e participantes são **dados de demonstração** (a app mostra um aviso enquanto `DEMO_CONTENT = true` em `src/data/event.ts`). Substituir pelo programa oficial antes de publicar.
 
+## Guia de utilização (PDF)
+
+[`docs/manual/ion-guia-de-utilizacao.pdf`](docs/manual/ion-guia-de-utilizacao.pdf) explica todas as funcionalidades passo a passo, com screenshots reais da app e marcadores numerados.
+
+O PDF é gerado a partir da própria app — sempre que a app ou o programa mudarem, basta correr:
+
+```bash
+npm run manual
+```
+
+- `scripts/manual/shots.mjs` — percurso pela app e elementos a assinalar em cada screenshot
+- `scripts/manual/content.mjs` — texto do guia (PT-PT)
+- `scripts/manual/render.mjs` + `manual.css` — paginação A4 com o visual da app e exportação para PDF (Chromium)
+
 ## Deploy — GitHub Pages
 
 O workflow `.github/workflows/deploy-pages.yml` faz build e publica em cada push para `main` (ou manualmente em *Actions → Deploy to GitHub Pages → Run workflow*).
